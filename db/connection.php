@@ -2,4 +2,10 @@
 session_start();
 require 'functions.php';
 
-$connection = new MysqlPDO('mysql:host=localhost;dbname=TeamScorch;charset=utf8;', 'TeamScorch', 'softuni');
+try {
+    $connection = new MysqlPDO('mysql:host=localhost; dbname=teamscorch; charset=utf8;', 'TeamScorch', 'softuni');
+} catch(PDOException $e) {
+    echo $e->getMessage();
+}
+
+//$connection = new MysqlPDO('mysql:host=localhost; dbname=teamscorch; charset=utf8;', 'TeamScorch', 'softuni');

@@ -2,7 +2,7 @@
 class MysqlPDO extends PDO {
     private $connect = null;
     public function __construct($dsn,$dbusername,$dbpassword) { 
-        parent::__construct($dsn,$dbusername,$dbpassword);
+        parent::__construct($dsn, $dbusername, $dbpassword);
         $this->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     }
     public function MSelectOnly($table, $select = ' * ', $where = null) {

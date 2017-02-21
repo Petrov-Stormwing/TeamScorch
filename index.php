@@ -9,7 +9,7 @@ require 'db/connection.php';
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	<?php echo $_SESSION['error'] . "<br>"; ?>
+<?php echo !empty($_SESSION['error']) ? $_SESSION['error'] . "<br>" : ""; ?>
 
 	<h1>Welcome to the forum</h1>
 	<h3>Please, in order to use it singin or register</h3>
