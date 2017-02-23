@@ -7,5 +7,3 @@ try {
 } catch(PDOException $e) {
     echo $e->getMessage();
 }
-
-//$connection = new MysqlPDO('mysql:host=localhost; dbname=teamscorch; charset=utf8;', 'TeamScorch', 'softuni');
