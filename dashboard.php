@@ -12,6 +12,7 @@ if (!isset($_SESSION['admin_session']) )
     $commons->redirectTo(SITE_PATH.'index.php');
 }
 ?>
+
 <html>
 <head>
     <title>Products Management System | Admin Panel</title>

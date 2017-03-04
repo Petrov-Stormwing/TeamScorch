@@ -7,13 +7,23 @@ require 'db/connection.php';
 	<meta charset="UTF-8">
 	<title>Welcome to this awesome forum</title>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="resources/static/css/frontpage.css">
 </head>
 <body>
 <?php echo !empty($_SESSION['error']) ? $_SESSION['error'] . "<br>" : ""; ?>
-
-	<h1>Welcome to the forum</h1>
-	<h3>Please, in order to use it singin or register</h3>
-
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Blog</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="#">Home</a></li>
+			<li><a href="#">Page 1</a></li>
+			<li><a href="#">Page 2</a></li>
+			<li><a href="#">Page 3</a></li>
+		</ul>
+	</div>
+</nav>
 	<div class="col-md-6">
 		<h3>Login</h3>
 		<form method="post" action="requests/login.php">
