@@ -3,9 +3,9 @@
         <div class="row">
             <div id="main" class="col-sm-9">
                 <div><h4>
-                    <span th:text="${user.email}"></span>
+                    <span <?php ?>></span> <!--TODO:: get username email-->
                     <br/>
-                    <span th:text="${user.fullName}"></span></h4>
+                    <span <?php ?>></span></h4><!--TODO:: get full name email-->
                 </div>
             </div>
         </div>
