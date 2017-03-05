@@ -6,7 +6,7 @@ require 'db/connection.php';
 <head>
 	<meta charset="UTF-8">
 	<title>Welcome to this awesome forum</title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="resources/static/css/frontpage.css">
 </head>
 <body>
@@ -31,7 +31,7 @@ require 'db/connection.php';
 			<input type="text" name="email" class="form-control" id="email" placeholder="email" required>
 			<label for="password">Password:</label>
 			<input type="password" name="password" class="form-control" id="password" placeholder="password" required>
-			<input type="submit" name="login" class="btn btn-info">
+			<input type="submit" name="login" class="btn btn-primary">
 		</form>
 	</div>
 	<div class="col-md-6">
@@ -43,7 +43,7 @@ require 'db/connection.php';
 			<input type="text" name="email" class="form-control" id="email" placeholder="email" required>
 			<label for="password">Password:</label>
 			<input type="password" name="password" class="form-control" id="password" placeholder="password" required>
-			<input type="submit" name="register" class="btn btn-info">
+			<input type="submit" name="register" class="btn btn-primary">
 		</form>
 	</div>
 </body>
