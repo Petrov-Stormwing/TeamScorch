@@ -1,12 +1,28 @@
 <?php
-require 'db/connection.php';
+require_once 'db/connection.php';
+require_once 'controllers/PostContoller.php';
+
+$postcontroller = new PostController($connection);
 
 if (empty($_SESSION['user'])) {
 	$_SESSION['error'] = 'Sorry, but you dont have access to this page or you are not register user';
 	header('Location: '. $_SERVER['SERVER_NAME']);
 }
 
-$allPosts = $connection->MSelectList('Posts', '*', 'ORDER BY ID DESC');
+if (!empty($_POST['addPost'])) {
+	$postcontroller->addPost();
+}
+
+if (!empty($_POST['delete'])) {
+	$postToDelete = Post::getPostById($_POST['id']);
+	echo "<pre>";
+	print_r($postToDelete);
+	echo "</pre>";
+	// $postcontroller->deletePost();
+}
+
+$allPosts = $postcontroller->getAllPosts();
+
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +53,7 @@ $allPosts = $connection->MSelectList('Posts', '*', 'ORDER BY ID DESC');
 <?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
 	<div class="col-md-12">
 		<h3>Add new blog post:</h3>
-		<form method="post" action="requests/addPost.php">
+		<form method="post" action="">
 			<input type="text" name="title" class="form-control" placeholder="Enter title of the post" required>
 			<textarea name="blogText" class="form-control" required></textarea>
 			<input type="submit" name="addPost" class="btn btn-primary" value="Add Post">
@@ -49,6 +65,12 @@ $allPosts = $connection->MSelectList('Posts', '*', 'ORDER BY ID DESC');
 		<?php foreach ($allPosts as $post): ?>
 			<h4><?= $post['Title'] ?></h4>
 			<p><?= $post['Content'] ?></p>
+			<form method="post">
+				<input type="hidden" name="id" value="<?= $post['ID']; ?>">
+				<input type="submit" class="btn btn-warning" name="edit" value="Edit">
+				<input type="submit" class="btn btn-danger" name="delete" value="Delete">
+			</form>
+			<hr>
 		<?php endforeach ?>
 	</div>
 </div>

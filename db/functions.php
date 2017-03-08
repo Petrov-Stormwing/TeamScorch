@@ -5,6 +5,14 @@ class MysqlPDO extends PDO {
         parent::__construct($dsn, $dbusername, $dbpassword);
         $this->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     }
+    public function MSelectOnlyObject($table, $select = ' * ', $where = null) {
+        $sth = $this->prepare('SELECT '.$select.' FROM '.$table.'  '.$where);
+        $sth->execute();
+        // echo "<pre>";
+        // print_r($sth);
+        // echo "</pre>";
+        return $sth->fetchObject(__CLASS__);
+    }
     public function MSelectOnly($table, $select = ' * ', $where = null) {
         $sth = $this->prepare('SELECT '.$select.' FROM '.$table.'  '.$where);
         $sth->execute();

@@ -9,7 +9,7 @@ Class Post
 
 	protected $connection;
 
-	public function __construct(int $id, string $title, string $content, int $authorId, PDO $connection)
+	public function __construct(int $id = 0, string $title = '', string $content = '', int $authorId = 0, PDO $connection)
 	{
 		$this->id = $id;
 		$this->title = $title;
@@ -114,9 +114,25 @@ Class Post
         return $this;
     }
 
+    public static function getPostById($id)
+    {
+        return self::$connection->MSelectOnlyObject('Posts', '*', 'WHERE ID = ' . $id);
+    }
+
     public function addPostToDb()
     {
     	$this->connection->MInsert('Posts', '(Title, Content, UserID) VALUES ("' . $this->getTitle() . '","' . $this->getContent() . '","' . $this->getAuthor() . '"' . ')');
     	return $this;
+    }
+
+    public function editPost($postId, $title, $content)
+    {
+        $this->connection->MUpdate('Posts', 'Title = "' . $title . '", Content = "' . $content . '", UserID = "' . $getAuthor . '"');
+        return $this;
+    }
+
+    public function deletePost($postId)
+    {
+        $this->connection->MDelete('Posts', 'WHERE ID = ' . $postId);
     }
 }
