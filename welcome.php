@@ -10,15 +10,16 @@ if (empty($_SESSION['user'])) {
 }
 
 if (!empty($_POST['addPost'])) {
-	$postcontroller->addPost();
+	$postcontroller->addPostToDb($_POST['title'], $_POST['blogText'], $_SESSION['user']['ID']);
+}
+
+if (!empty($_POST['edit'])) {
+	header('Location: '. '../views/edit.php?id=' . $_POST['id']);
 }
 
 if (!empty($_POST['delete'])) {
-	$postToDelete = Post::getPostById($_POST['id']);
-	echo "<pre>";
-	print_r($postToDelete);
-	echo "</pre>";
-	// $postcontroller->deletePost();
+	$postToDelete = $postcontroller->getPostById($_POST['id']);
+	$postcontroller->deletePost($postToDelete);
 }
 
 $allPosts = $postcontroller->getAllPosts();
@@ -44,7 +45,7 @@ $allPosts = $postcontroller->getAllPosts();
 			<li class="active"><a href="#">Home</a></li>
 			<li><a href="#">Page 1</a></li>
 			<li><a href="#">Page 2</a></li>
-			<li><a href="#">Page 3</a></li>
+			<li><a href="requests/logout.php">Изход</a></li>
 			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>
@@ -63,10 +64,10 @@ $allPosts = $postcontroller->getAllPosts();
 	<div class="col-md-12">
 		<h3>Posts</h3>
 		<?php foreach ($allPosts as $post): ?>
-			<h4><?= $post['Title'] ?></h4>
-			<p><?= $post['Content'] ?></p>
+			<h4><?= $post->getTitle() . " - " . $post->getDate(); ?></h4>
+			<p><?= $post->getContent(); ?></p>
 			<form method="post">
-				<input type="hidden" name="id" value="<?= $post['ID']; ?>">
+				<input type="hidden" name="id" value="<?= $post->getID(); ?>">
 				<input type="submit" class="btn btn-warning" name="edit" value="Edit">
 				<input type="submit" class="btn btn-danger" name="delete" value="Delete">
 			</form>

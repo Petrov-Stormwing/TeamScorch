@@ -6,15 +6,12 @@ Class Post
 	protected $title;
 	protected $content;
 	protected $authorId;
+    protected $date;
 
 	protected $connection;
 
-	public function __construct(int $id = 0, string $title = '', string $content = '', int $authorId = 0, PDO $connection)
+	public function __construct(PDO $connection)
 	{
-		$this->id = $id;
-		$this->title = $title;
-		$this->content = $content;
-		$this->author = $authorId;
 		$this->connection = $connection;
 	}
 
@@ -114,25 +111,58 @@ Class Post
         return $this;
     }
 
-    public static function getPostById($id)
+    /**
+     * Gets the value of date.
+     *
+     * @return mixed
+     */
+    public function getDate()
     {
-        return self::$connection->MSelectOnlyObject('Posts', '*', 'WHERE ID = ' . $id);
+        return $this->date;
+        // return date_format($this->date, 'd-m-Y H:i:s');
     }
 
-    public function addPostToDb()
+    /**
+     * Sets the value of date.
+     *
+     * @param mixed $date the date
+     *
+     * @return self
+     */
+    protected function setDate($date)
     {
-    	$this->connection->MInsert('Posts', '(Title, Content, UserID) VALUES ("' . $this->getTitle() . '","' . $this->getContent() . '","' . $this->getAuthor() . '"' . ')');
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getPostById($id)
+    {
+        $post = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
+        $this->setId($post['ID']);
+        $this->setTitle($post['Title']);
+        $this->setContent($post['Content']);
+        $this->setAuthor($post['UserID']);
+        $this->setDate($post['DateCreated']);
+        return $this;
+    }
+
+    public function addPostToDb($title, $content, $authorId)
+    {
+        $date = date('Y-m-d H:i:s');
+    	$this->connection->MInsert('Posts', '(Title, Content, UserID, DateCreated) VALUES ("' . $title . '", "' . $content . '", "' . $authorId . '", "' . $date . '")');
     	return $this;
     }
 
     public function editPost($postId, $title, $content)
     {
-        $this->connection->MUpdate('Posts', 'Title = "' . $title . '", Content = "' . $content . '", UserID = "' . $getAuthor . '"');
+        $this->connection->MUpdate('Posts', 'Title = "' . $title . '", Content = "' . $content . '", UserID = "' . $this->getAuthor() . '"', 'WHERE ID = "' . $postId . '"');
         return $this;
     }
 
     public function deletePost($postId)
     {
-        $this->connection->MDelete('Posts', 'WHERE ID = ' . $postId);
+        $this->connection->MDelete('Posts', 'WHERE ID = "' . $postId . '"');
+        return true;
     }
 }
