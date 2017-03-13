@@ -15,6 +15,7 @@ if (empty($_SESSION['user']) && $_SESSION['user']['AccessLevel'] != 1) {
 
 $allUsers = $userController->getAllUsers();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

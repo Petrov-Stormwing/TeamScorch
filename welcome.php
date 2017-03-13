@@ -28,6 +28,7 @@ if (!empty($_POST['delete'])) {
 	$postcontroller->deletePost($postToDelete);
 }
 
+
 $allPosts = $postcontroller->getAllPosts();
 ?>
 <!DOCTYPE html>
@@ -69,7 +70,7 @@ $allPosts = $postcontroller->getAllPosts();
 	<div class="col-md-12">
 		<h3>Posts</h3>
 		<?php foreach ($allPosts as $post): ?>
-			<h4><?= $post->getTitle() . " - " . $post->getDate(); ?></h4>
+			<h4><a href="single-post.php?id=<?= $post->getId() ?>"><?= $post->getTitle() . " - " . $post->getDate(); ?></a></h4>
 			<p><?= $post->getContent(); ?></p>
 			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
 				<form method="post">
