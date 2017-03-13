@@ -1,6 +1,31 @@
-<?php 
+<?php
 require 'db/connection.php';
- ?>
+require 'controllers/UserController.php';
+
+$userController = new UserController($connection);
+
+if (!empty($_POST['register'])) {
+	$addedUser = $userController->addUserToDb($_POST['name'], $_POST['email'], $_POST['password']);
+	$_SESSION['user'] = $addedUser;
+
+	if (!empty($addedUser)) {
+		header('Location: '. '../welcome.php');
+	} else {
+		throw new Exception("User was not added!");
+	}
+}
+if (!empty($_POST['login'])) {
+	$loggedInUser = $userController->loginUser($_POST['email'], $_POST['password']);
+
+	$_SESSION['user'] = $loggedInUser;
+
+	if (!empty($loggedInUser)) {
+		header('Location: '. '../welcome.php');
+	} else {
+		throw new Exception("User was not added!");
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,15 +43,12 @@ require 'db/connection.php';
 		</div>
 		<ul class="nav navbar-nav">
 			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#">Page 1</a></li>
-			<li><a href="#">Page 2</a></li>
-			<li><a href="#">Page 3</a></li>
 		</ul>
 	</div>
 </nav>
 	<div class="col-md-6">
 		<h3>Login</h3>
-		<form method="post" action="requests/login.php">
+		<form method="post">
 			<label for="email">Email:</label>
 			<input type="text" name="email" class="form-control" id="email" placeholder="email" required>
 			<label for="password">Password:</label>
@@ -36,7 +58,7 @@ require 'db/connection.php';
 	</div>
 	<div class="col-md-6">
 		<h3>Register</h3>
-		<form method="post" action="requests/register.php">
+		<form method="post">
 			<label for="name">Name:</label>
 			<input type="text" name="name" class="form-control" id="name" placeholder="name" required>
 			<label for="email">Email:</label>

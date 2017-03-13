@@ -1,8 +1,14 @@
 <?php
 require_once 'db/connection.php';
 require_once 'controllers/PostContoller.php';
+require 'controllers/UserController.php';
 
 $postcontroller = new PostController($connection);
+$userController = new UserController($connection);
+
+if (!empty($_GET['logout'])) {
+	$userController->logout();
+}
 
 if (empty($_SESSION['user'])) {
 	$_SESSION['error'] = 'Sorry, but you dont have access to this page or you are not register user';
@@ -23,9 +29,7 @@ if (!empty($_POST['delete'])) {
 }
 
 $allPosts = $postcontroller->getAllPosts();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,10 +46,11 @@ $allPosts = $postcontroller->getAllPosts();
 			<a class="navbar-brand" href="#">Blog</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Home</a></li>
-			<li><a href="#">Page 1</a></li>
-			<li><a href="#">Page 2</a></li>
-			<li><a href="requests/logout.php">Изход</a></li>
+			<li class="active"><a href="welcome">Posts</a></li>
+			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
+				<li><a href="users.php">Users</a></li>
+			<?php endif ?>
+			<li><a href="welcome.php?logout=true">Изход</a></li>
 			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>
@@ -66,11 +71,13 @@ $allPosts = $postcontroller->getAllPosts();
 		<?php foreach ($allPosts as $post): ?>
 			<h4><?= $post->getTitle() . " - " . $post->getDate(); ?></h4>
 			<p><?= $post->getContent(); ?></p>
-			<form method="post">
-				<input type="hidden" name="id" value="<?= $post->getID(); ?>">
-				<input type="submit" class="btn btn-warning" name="edit" value="Edit">
-				<input type="submit" class="btn btn-danger" name="delete" value="Delete">
-			</form>
+			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
+				<form method="post">
+					<input type="hidden" name="id" value="<?= $post->getID(); ?>">
+					<input type="submit" class="btn btn-warning" name="edit" value="Edit">
+					<input type="submit" class="btn btn-danger" name="delete" value="Delete">
+				</form>
+			<?php endif ?>
 			<hr>
 		<?php endforeach ?>
 	</div>
