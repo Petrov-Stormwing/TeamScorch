@@ -2,9 +2,9 @@
 Екипен проект на СофтУни. В екипа участват: 
 * Rayko Hadzhitsenev (Rayko)
 * Zlatina Ivanova (zlato7)
-* Simeon Petrov (Simeon.Petrov)
-* Dimitar Klaturov (bulgaria_mitko)
-* Radoslav Radev (radoslav013)
+* Simeon Petrov (Simeon.Petrov) /active/
+* Dimitar Klaturov (bulgaria_mitko) /active/
+* Radoslav Radev (radoslav013) /active/
 * bamse (bamse)
 
 ## Работа с gibhub
