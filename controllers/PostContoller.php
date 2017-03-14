@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Post.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Tag.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Comment.php';
 
 Class PostController
 {
@@ -104,6 +105,10 @@ Class PostController
 
     public function deleteComment(Comment $postComment)
     {
+//        echo "<pre>";
+//        print_r($postComment->getId());
+//        echo "<pre>";
+//        exit;
         $deleteComment = $postComment->deleteComment($postComment->getId());
 
         if (!empty($deleteComment)) {
@@ -128,10 +133,14 @@ Class PostController
 
     public function getCommentById($id)
     {
-        $comment = $this->connection->MSelectOnly('Comments', '*', 'WHERE ID = ' . $id);
-        $this->setId($comment['ID']);
-        $this->setContent($comment['Content']);
-        return $this;
+//        echo "<pre>";
+//        print_r($id);
+//        echo "<pre>";
+//        exit;
+        $commentFromDb = $this->connection->MSelectOnly('Comments', '*', 'WHERE ID = ' . $id);
+        $comment = new Comment( $commentFromDb['Content'], $commentFromDb['UserID'], $commentFromDb['PostID'], $this->connection);
+        $comment->setId($commentFromDb['ID']);
+        return $comment;
     }
 
 //    public function getCommentById($id)

@@ -33,7 +33,7 @@ Class Comment
      *
      * @return self
      */
-    protected function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
 
@@ -120,7 +120,7 @@ Class Comment
 
     public function getCommentById($id)
     {
-        $post = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
+        $post = $this->connection->MUpdate('Comments', 'Deleted = 1', 'WHERE ID = "' . $id . '"');
         $this->setId($post['ID']);
         $this->setContent($post['Content']);
         return $this;
@@ -129,7 +129,7 @@ Class Comment
 
     public function deleteComment($id)
     {
-        $this->connection->MDelete('Comments', 'WHERE ID = "' . $id . '"');
+        $this->connection->MUpdate('Comments', 'Deleted = 1', 'WHERE ID = ' . $id);
         return true;
     }
 }
