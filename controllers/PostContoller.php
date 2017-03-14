@@ -54,6 +54,12 @@ Class PostController
         return $post->getPostById($id);
     }
 
+    public function getCommentById($id)
+    {
+        $comment = new Comment($this->connection);
+        return $comment->getCommentById($id);
+    }
+
 	public function getAllPosts()
 	{
 		$data = $this->connection->MSelectList('Posts', '*', 'ORDER BY ID DESC');

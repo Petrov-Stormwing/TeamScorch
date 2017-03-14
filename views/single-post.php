@@ -86,8 +86,8 @@ $allComments = $postcontroller->getCommentsByPostId($post);
         <?= $comment['Content']; ?>
         <?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
             <form method="post">
-                <input type="hidden" name="id" value="<?= $comment->getID(); ?>">
-                <input type="submit" class="btn btn-warning" name="edit" value="Edit">
+                <input type="hidden" name="id" value="<?= $comment['ID']; ?>">
+<!--                <input type="submit" class="btn btn-warning" name="edit" value="Edit">-->
                 <input type="submit" class="btn btn-danger" name="delete" value="Delete">
             </form>
         <?php endif ?>
