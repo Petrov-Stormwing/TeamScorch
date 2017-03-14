@@ -37,16 +37,6 @@ Class PostController
         return $this;
     }
 
-    public function deleteComment(Comment $comment){
-        $deletedComment = $comment->deleteComment($comment->getId());
-
-        if (!empty($deletedComment)) {
-            header('Location: '. '../views/single-post.php');
-        } else {
-            throw new Exception("Comment was not deleted!");
-        }
-    }
-
 
 	public function getPostById($id)
     {
@@ -54,11 +44,11 @@ Class PostController
         return $post->getPostById($id);
     }
 
-    public function getCommentById($id)
-    {
-        $comment = new Comment($this->connection);
-        return $comment->getCommentById($id);
-    }
+//    public function getCommentById($id)
+//    {
+//        $comment = new Comment($this->connection);
+//        return $comment->getCommentById($id);
+//    }
 
 	public function getAllPosts()
 	{
@@ -112,6 +102,17 @@ Class PostController
 		}
 	}
 
+    public function deleteComment(Comment $postComment)
+    {
+        $deleteComment = $postComment->deleteComment($postComment->getId());
+
+        if (!empty($deleteComment)) {
+            header('Location: '. '../views/single-post.php');
+        } else {
+            throw new Exception("Comment was not deleted!");
+        }
+    }
+
 	public function getCommentsByPostId(Post $post)
 	{
 		$data = $this->connection->MSelectList(
@@ -124,4 +125,18 @@ Class PostController
 
 		return $data;
 	}
+
+    public function getCommentById($id)
+    {
+        $comment = $this->connection->MSelectOnly('Comments', '*', 'WHERE ID = ' . $id);
+        $this->setId($comment['ID']);
+        $this->setContent($comment['Content']);
+        return $this;
+    }
+
+//    public function getCommentById($id)
+//    {
+//        $comment = new Comment($this->connection);
+//        return $comment->getCommentById($id);
+//    }
 }

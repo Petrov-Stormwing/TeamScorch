@@ -24,13 +24,19 @@ if (!empty($_POST['edit'])) {
 }
 
 if (!empty($_POST['delete'])) {
-    $postToDelete = $postcontroller->getPostById($_POST['id']);
-    $postcontroller->deletePost($postToDelete);
+    $commentToDelete = $postcontroller->getPostById($_POST['id']);
+    $postcontroller->deletePost($commentToDelete);
 }
 if (!empty($_POST['addComment'])) {
     $comment = new Comment($_POST['comment'], $_SESSION['user']['ID'], $post->getId(), $connection);
     $comment->addCommentToDb();
 }
+
+if (!empty($_POST['deleteComment'])) {
+    $commentToDelete = $postcontroller->getCommentById($_POST['id']);
+    $postcontroller->deleteComment($commentToDelete);
+}
+
 
 $allComments = $postcontroller->getCommentsByPostId($post);
 
@@ -88,7 +94,7 @@ $allComments = $postcontroller->getCommentsByPostId($post);
             <form method="post">
                 <input type="hidden" name="id" value="<?= $comment['ID']; ?>">
 <!--                <input type="submit" class="btn btn-warning" name="edit" value="Edit">-->
-                <input type="submit" class="btn btn-danger" name="delete" value="Delete">
+                <input type="submit" class="btn btn-danger" name="deleteComment" value="Delete">
             </form>
         <?php endif ?>
     <?php endforeach ?>

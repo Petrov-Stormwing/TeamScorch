@@ -117,4 +117,19 @@ Class Comment
     	$this->connection->MInsert('Comments', '(Content, UserID, PostID) VALUES ("' . $this->getContent() . '", "' . $this->getUserId() . '", "' . $this->getPostId() . '")');
     	return $this;
     }
+
+    public function getCommentById($id)
+    {
+        $post = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
+        $this->setId($post['ID']);
+        $this->setContent($post['Content']);
+        return $this;
+    }
+
+
+    public function deleteComment($id)
+    {
+        $this->connection->MDelete('Comments', 'WHERE ID = "' . $id . '"');
+        return true;
+    }
 }
