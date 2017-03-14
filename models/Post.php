@@ -8,6 +8,8 @@ Class Post
 	protected $authorId;
     protected $date;
 
+    protected $tags = [];
+
 	protected $connection;
 
 	public function __construct(PDO $connection)
@@ -136,6 +138,17 @@ Class Post
         return $this;
     }
 
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    public function addTag($tag)
+    {
+        $this->tags[] = $tag;
+        return $this;
+    }
+
     public function getPostById($id)
     {
         $post = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
@@ -151,7 +164,8 @@ Class Post
     {
         $date = date('Y-m-d H:i:s');
     	$this->connection->MInsert('Posts', '(Title, Content, UserID, DateCreated) VALUES ("' . $title . '", "' . $content . '", "' . $authorId . '", "' . $date . '")');
-    	return $this;
+        $postId = $this->connection->MSelectOnly('Posts', 'ID', 'ORDER BY ID DESC');
+        return $postId['ID'];
     }
 
     public function editPost($postId, $title, $content)
@@ -164,5 +178,17 @@ Class Post
     {
         $this->connection->MDelete('Posts', 'WHERE ID = "' . $postId . '"');
         return true;
+    }
+
+    public function getTagsByPostId($postId)
+    {
+        $post = $this->getPostById($postId);
+
+        $allTags = $this->connection->MSelectList('Tags', '*', 'WHERE PostID = ' . $post->getId());
+        foreach ($allTags as $tag) {
+            $this->addTag($tag['Name']);
+        }
+
+        return $this->getTags();
     }
 }

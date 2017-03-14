@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time:  9 март 2017 в 12:04
+-- Generation Time: 14 март 2017 в 11:44
 -- Версия на сървъра: 5.7.17-0ubuntu0.16.04.1
 -- PHP Version: 7.0.16-4+deb.sury.org~xenial+1
 
@@ -23,14 +23,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Category`
+-- Структура на таблица `Comments`
 --
 
-CREATE TABLE `Category` (
+CREATE TABLE `Comments` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Content` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `UserID` int(11) NOT NULL,
   `PostID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Схема на данните от таблица `Comments`
+--
+
+INSERT INTO `Comments` (`ID`, `Content`, `UserID`, `PostID`) VALUES
+(1, 'Who is this person?', 1, 2),
+(2, 'I hate FACEBOOK!!!!', 1, 1),
+(3, 'This is the greatest programmer, ever!!!', 2, 2),
+(4, 'If you hate it, then delete it! :D', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -51,22 +62,32 @@ CREATE TABLE `Posts` (
 --
 
 INSERT INTO `Posts` (`ID`, `Title`, `Content`, `UserID`, `DateCreated`) VALUES
-(1, 'Facebook API for custom emotions/actions/doing/everything', 'fsdfsdfsdfsdf', 2, '2017-03-09 11:08:52'),
-(2, 'Facebook API for custom emotions/actions/doing/everything', 'fdsfsdfdsffffffffffffffffffffffffffffff', 2, '2017-03-09 11:17:45'),
-(3, 'Facebook API for custom emotions/actions/doing/everything', 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq22222222222333333333333333333456778899', 2, '2017-03-09 11:24:46');
+(1, 'Facebook API for custom emotions/actions/doing/everything', 'SimpleText is the native text editor for the Apple classic Mac OS.[1] SimpleText allows editing including text formatting (underline, italic, bold, etc.), fonts, and sizes. It was developed to integrate the features included in the different versions of TeachText that were created by various software development groups within Apple.[2]', 1, '2017-03-14 11:41:36'),
+(2, 'Wallis Nunataks', 'Wallis Nunataks (66°52′S 55°39′ECoordinates: 66°52′S 55°39′E) is a four nunataks with steep rock faces on their south and east sides, standing 4 nautical miles (7 km) east-northeast of Mount Storegutt in Enderby Land. Mapped from ANARE (Australian National Antarctic Research Expeditions) surveys and air photos, 1954-66. Named by Antarctic Names Committee of Australia (ANCA) for G.R. Wallis, geologist with the ANARE (Nella Dan), 1965.', 1, '2017-03-14 11:42:11');
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Threads`
+-- Структура на таблица `Tags`
 --
 
-CREATE TABLE `Threads` (
+CREATE TABLE `Tags` (
   `ID` int(11) NOT NULL,
-  `Name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `CategoryID` int(11) NOT NULL,
+  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `PostID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Схема на данните от таблица `Tags`
+--
+
+INSERT INTO `Tags` (`ID`, `Name`, `PostID`) VALUES
+(1, 'apple', 1),
+(2, 'facebook', 1),
+(3, 'text', 1),
+(4, 'wallis', 2),
+(5, 'nunataks', 2),
+(6, 'australia', 2);
 
 -- --------------------------------------------------------
 
@@ -87,17 +108,17 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Name`, `Email`, `Password`, `AccessLevel`) VALUES
-(1, 'Demo Demov', 'demo@demo123.com', 'demo123', 0),
-(2, 'Dimitar Klaturov', 'bulgaria_mitko@yahoo.com', '1234', 1);
+(1, 'SoftUni USER', 'softuni@softuni.bg', '$2y$10$SYcfG3U0FzusUlZX4XnHUO/ces1qpemGl8WLRW/J9xVMatadb.a1W', 1),
+(2, 'FakeRoyal', 'royal@softuni.bg', '$2y$10$1YGlXiCUOtpTjqBYKpczkeorlNwu5/LY4Agi0qEfg2iq.et/Jcl6.', 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `Category`
+-- Indexes for table `Comments`
 --
-ALTER TABLE `Category`
+ALTER TABLE `Comments`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -107,9 +128,9 @@ ALTER TABLE `Posts`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `Threads`
+-- Indexes for table `Tags`
 --
-ALTER TABLE `Threads`
+ALTER TABLE `Tags`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -123,20 +144,20 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT for table `Category`
+-- AUTO_INCREMENT for table `Comments`
 --
-ALTER TABLE `Category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Comments`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Posts`
 --
 ALTER TABLE `Posts`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `Threads`
+-- AUTO_INCREMENT for table `Tags`
 --
-ALTER TABLE `Threads`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Tags`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `Users`
 --
@@ -145,10 +166,3 @@ ALTER TABLE `Users`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
--- CREATE TABLE `Comments` (
---   `ID` int(11) NOT NULL,
---   `name` varchar(50) NOT NULL,
---   `comment` varchar(255) NOT NULL,
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,9 +1,11 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Post.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Tag.php';
 
 Class PostController
 {
 	protected $posts = [];
+	protected $comments = [];
 	protected $connection;
 
 	public function __construct(PDO $connection)
@@ -23,10 +25,21 @@ Class PostController
         return $this;
     }
 
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
 	public function getPostById($id)
     {
         $post = new Post($this->connection);
-        // $postDetails = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
         return $post->getPostById($id);
     }
 
@@ -40,17 +53,22 @@ Class PostController
 		return $this->getPosts();
 	}
 
-	public function addPostToDb($title, $content, $authorId)
+	public function addPostToDb($title, $content, $authorId, $tags)
 	{
 		$post = new Post($this->connection);
-
-		$addedPost = $post->addPostToDb($title, $content, $authorId);
+		$addedPostId = $post->addPostToDb($title, $content, $authorId);
 		
-		if (!empty($addedPost)) {
+		foreach ($tags as $tag) {
+			$tag = new Tag(trim($tag), $addedPostId, $this->connection);
+			$tag->addTagToDb();
+		}
+
+		if (!empty($addedPostId)) {
 			header('Location: '. '../welcome.php');
 		} else {
 			throw new Exception("Post was not added!");
 		}
+
 	}
 
 	public function editPost($id, $title, $content)
@@ -77,5 +95,16 @@ Class PostController
 		}
 	}
 
+	public function getCommentsByPostId(Post $post)
+	{
+		$data = $this->connection->MSelectList(
+			'Comments AS C',
+			'C.ID, C.Content, U.Name',
+			'JOIN Users AS U ON U.ID = C.UserID
+			WHERE C.PostID = "' . $post->getId() . '"
+			ORDER BY ID DESC'
+		);
 
+		return $data;
+	}
 }

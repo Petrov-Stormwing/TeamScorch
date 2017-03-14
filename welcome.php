@@ -1,7 +1,8 @@
 <?php
 require_once 'db/connection.php';
 require_once 'controllers/PostContoller.php';
-require 'controllers/UserController.php';
+require_once 'controllers/UserController.php';
+require_once 'models/Tag.php';
 
 $postcontroller = new PostController($connection);
 $userController = new UserController($connection);
@@ -16,7 +17,8 @@ if (empty($_SESSION['user'])) {
 }
 
 if (!empty($_POST['addPost'])) {
-	$postcontroller->addPostToDb($_POST['title'], $_POST['blogText'], $_SESSION['user']['ID']);
+	$tags = explode(",", $_POST['tags']);
+	$postcontroller->addPostToDb($_POST['title'], $_POST['blogText'], $_SESSION['user']['ID'], $tags);
 }
 
 if (!empty($_POST['edit'])) {
@@ -47,7 +49,7 @@ $allPosts = $postcontroller->getAllPosts();
 			<a class="navbar-brand" href="#">Blog</a>
 		</div>
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="welcome">Posts</a></li>
+			<li class="active"><a href="welcome.php">Posts</a></li>
 			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
 				<li><a href="users.php">Users</a></li>
 			<?php endif ?>
@@ -61,8 +63,12 @@ $allPosts = $postcontroller->getAllPosts();
 	<div class="col-md-12">
 		<h3>Add new blog post:</h3>
 		<form method="post" action="">
-			<input type="text" name="title" class="form-control" placeholder="Enter title of the post" required>
-			<textarea name="blogText" class="form-control" required></textarea>
+			<label for="title">Title:</label>
+			<input type="text" name="title" class="form-control" id="title" placeholder="Enter title of the post" required>
+			<label for="content">Content:</label>
+			<textarea name="blogText" class="form-control" id="content" required></textarea>
+			<label for="tags">Tags:</label>
+			<input type="text" name="tags" class="form-control" id="tags" placeholder="Enter tags using comma for seperation" required>
 			<input type="submit" name="addPost" class="btn btn-primary" value="Add Post">
 		</form>
 	</div>
@@ -72,6 +78,9 @@ $allPosts = $postcontroller->getAllPosts();
 		<?php foreach ($allPosts as $post): ?>
 			<h4><a href="single-post.php?id=<?= $post->getId() ?>"><?= $post->getTitle() . " - " . $post->getDate(); ?></a></h4>
 			<p><?= $post->getContent(); ?></p>
+			Tags: <span class="bg-primary">
+				<?php echo implode(", ", $post->getTagsByPostId($post->getId())); ?>
+			</span>
 			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
 				<form method="post">
 					<input type="hidden" name="id" value="<?= $post->getID(); ?>">
