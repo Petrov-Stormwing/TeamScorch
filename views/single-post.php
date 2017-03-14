@@ -1,8 +1,8 @@
 <?php
-require_once 'db/connection.php';
-require_once 'controllers/PostContoller.php';
-require_once 'controllers/UserController.php';
-require_once 'models/Comment.php';
+require_once '../db/connection.php';
+require_once '../controllers/PostContoller.php';
+require_once '../controllers/UserController.php';
+require_once '../models/Comment.php';
 
 $postcontroller = new PostController($connection);
 $userController = new UserController($connection);
@@ -19,7 +19,7 @@ if (empty($_SESSION['user'])) {
 }
 
 if (!empty($_POST['edit'])) {
-    header('Location: '. '../views/edit.php?id=' . $_POST['id']);
+    header('Location: '. 'edit.php?id=' . $_POST['id']);
 }
 
 if (!empty($_POST['delete'])) {
@@ -39,7 +39,6 @@ $allComments = $postcontroller->getCommentsByPostId($post);
     <meta charset="UTF-8">
     <title>Welcome to this awesome blog</title>
     <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="resources/static/css/frontpage.css">
 </head>
 <body>
 <nav class="navbar navbar-inverse">

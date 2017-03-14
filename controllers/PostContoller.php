@@ -64,7 +64,7 @@ Class PostController
 		}
 
 		if (!empty($addedPostId)) {
-			header('Location: '. '../welcome.php');
+			header('Location: '. '../views/welcome.php');
 		} else {
 			throw new Exception("Post was not added!");
 		}
@@ -78,7 +78,7 @@ Class PostController
 		$editedPost = $post->editPost($id, $title, $content);
 
 		if (!empty($editedPost)) {
-			header('Location: '. '../welcome.php');
+			header('Location: '. '../views/welcome.php');
 		} else {
 			throw new Exception("Post was not edited!");
 		}
@@ -89,7 +89,7 @@ Class PostController
 		$deletedPost = $post->deletePost($post->getId());
 
 		if (!empty($deletedPost)) {
-			header('Location: '. '../welcome.php');
+			header('Location: '. '../views/welcome.php');
 		} else {
 			throw new Exception("Post was not deleted!");
 		}

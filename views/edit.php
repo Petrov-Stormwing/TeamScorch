@@ -22,7 +22,6 @@ if (!empty($_POST['edit'])) {
 	<meta charset="UTF-8">
 	<title>Welcome to this awesome blog</title>
 	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="../resources/static/css/frontpage.css">
 </head>
 <body>
 <?php echo !empty($_SESSION['error']) ? $_SESSION['error'] . "<br>" : ""; ?>

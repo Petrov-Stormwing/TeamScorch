@@ -9,7 +9,7 @@ if (!empty($_POST['register'])) {
 	$_SESSION['user'] = $addedUser;
 
 	if (!empty($addedUser)) {
-		header('Location: '. '../welcome.php');
+		header('Location: '. 'views/welcome.php');
 	} else {
 		throw new Exception("User was not added!");
 	}
@@ -20,7 +20,7 @@ if (!empty($_POST['login'])) {
 	$_SESSION['user'] = $loggedInUser;
 
 	if (!empty($loggedInUser)) {
-		header('Location: '. '../welcome.php');
+		header('Location: '. 'views/welcome.php');
 	} else {
 		throw new Exception("User was not added!");
 	}
@@ -32,7 +32,6 @@ if (!empty($_POST['login'])) {
 	<meta charset="UTF-8">
 	<title>Welcome to this awesome forum</title>
 	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/static/css/frontpage.css">
 </head>
 <body>
 <?php echo !empty($_SESSION['error']) ? $_SESSION['error'] . "<br>" : ""; ?>
