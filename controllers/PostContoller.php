@@ -37,6 +37,17 @@ Class PostController
         return $this;
     }
 
+    public function deleteComment(Comment $comment){
+        $deletedComment = $comment->deleteComment($comment->getId());
+
+        if (!empty($deletedComment)) {
+            header('Location: '. '../views/single-post.php');
+        } else {
+            throw new Exception("Comment was not deleted!");
+        }
+    }
+
+
 	public function getPostById($id)
     {
         $post = new Post($this->connection);

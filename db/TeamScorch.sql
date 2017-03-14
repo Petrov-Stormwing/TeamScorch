@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu1
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 14 март 2017 в 11:44
--- Версия на сървъра: 5.7.17-0ubuntu0.16.04.1
--- PHP Version: 7.0.16-4+deb.sury.org~xenial+1
+-- Host: 127.0.0.1
+-- Generation Time: 14 март 2017 в 13:35
+-- Версия на сървъра: 10.1.16-MariaDB
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,39 +17,44 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `TeamScorch`
+-- Database: `teamscorch`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Comments`
+-- Структура на таблица `comments`
 --
 
-CREATE TABLE `Comments` (
+CREATE TABLE `comments` (
   `ID` int(11) NOT NULL,
   `Content` varchar(255) CHARACTER SET utf8 NOT NULL,
   `UserID` int(11) NOT NULL,
-  `PostID` int(11) NOT NULL
+  `PostID` int(11) NOT NULL,
+  `Deleted` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Схема на данните от таблица `Comments`
+-- Схема на данните от таблица `comments`
 --
 
-INSERT INTO `Comments` (`ID`, `Content`, `UserID`, `PostID`) VALUES
-(1, 'Who is this person?', 1, 2),
-(2, 'I hate FACEBOOK!!!!', 1, 1),
-(3, 'This is the greatest programmer, ever!!!', 2, 2),
-(4, 'If you hate it, then delete it! :D', 2, 1);
+INSERT INTO `comments` (`ID`, `Content`, `UserID`, `PostID`, `Deleted`) VALUES
+(1, 'Who is this person?', 1, 2, 0),
+(2, 'I hate FACEBOOK!!!!', 1, 1, 0),
+(3, 'This is the greatest programmer, ever!!!', 2, 2, 0),
+(4, 'If you hate it, then delete it! :D', 2, 1, 0),
+(5, 'gogoogogo', 3, 3, 0),
+(6, 'gogoogogo', 3, 3, 0),
+(7, 'gogoogogo', 3, 3, 0),
+(8, 'gogoogogo', 3, 3, 0);
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Posts`
+-- Структура на таблица `posts`
 --
 
-CREATE TABLE `Posts` (
+CREATE TABLE `posts` (
   `ID` int(11) NOT NULL,
   `Title` varchar(255) CHARACTER SET utf8 NOT NULL,
   `Content` text CHARACTER SET utf8 NOT NULL,
@@ -58,44 +63,46 @@ CREATE TABLE `Posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Схема на данните от таблица `Posts`
+-- Схема на данните от таблица `posts`
 --
 
-INSERT INTO `Posts` (`ID`, `Title`, `Content`, `UserID`, `DateCreated`) VALUES
+INSERT INTO `posts` (`ID`, `Title`, `Content`, `UserID`, `DateCreated`) VALUES
 (1, 'Facebook API for custom emotions/actions/doing/everything', 'SimpleText is the native text editor for the Apple classic Mac OS.[1] SimpleText allows editing including text formatting (underline, italic, bold, etc.), fonts, and sizes. It was developed to integrate the features included in the different versions of TeachText that were created by various software development groups within Apple.[2]', 1, '2017-03-14 11:41:36'),
-(2, 'Wallis Nunataks', 'Wallis Nunataks (66°52′S 55°39′ECoordinates: 66°52′S 55°39′E) is a four nunataks with steep rock faces on their south and east sides, standing 4 nautical miles (7 km) east-northeast of Mount Storegutt in Enderby Land. Mapped from ANARE (Australian National Antarctic Research Expeditions) surveys and air photos, 1954-66. Named by Antarctic Names Committee of Australia (ANCA) for G.R. Wallis, geologist with the ANARE (Nella Dan), 1965.', 1, '2017-03-14 11:42:11');
+(2, 'Wallis Nunataks', 'Wallis Nunataks (66°52′S 55°39′ECoordinates: 66°52′S 55°39′E) is a four nunataks with steep rock faces on their south and east sides, standing 4 nautical miles (7 km) east-northeast of Mount Storegutt in Enderby Land. Mapped from ANARE (Australian National Antarctic Research Expeditions) surveys and air photos, 1954-66. Named by Antarctic Names Committee of Australia (ANCA) for G.R. Wallis, geologist with the ANARE (Nella Dan), 1965.', 1, '2017-03-14 11:42:11'),
+(3, 'Mynewpost', 'adjoifero', 3, '2017-03-14 13:17:00');
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Tags`
+-- Структура на таблица `tags`
 --
 
-CREATE TABLE `Tags` (
+CREATE TABLE `tags` (
   `ID` int(11) NOT NULL,
   `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `PostID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Схема на данните от таблица `Tags`
+-- Схема на данните от таблица `tags`
 --
 
-INSERT INTO `Tags` (`ID`, `Name`, `PostID`) VALUES
+INSERT INTO `tags` (`ID`, `Name`, `PostID`) VALUES
 (1, 'apple', 1),
 (2, 'facebook', 1),
 (3, 'text', 1),
 (4, 'wallis', 2),
 (5, 'nunataks', 2),
-(6, 'australia', 2);
+(6, 'australia', 2),
+(7, 'wow', 3);
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `Users`
+-- Структура на таблица `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
@@ -104,39 +111,40 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Схема на данните от таблица `Users`
+-- Схема на данните от таблица `users`
 --
 
-INSERT INTO `Users` (`ID`, `Name`, `Email`, `Password`, `AccessLevel`) VALUES
+INSERT INTO `users` (`ID`, `Name`, `Email`, `Password`, `AccessLevel`) VALUES
 (1, 'SoftUni USER', 'softuni@softuni.bg', '$2y$10$SYcfG3U0FzusUlZX4XnHUO/ces1qpemGl8WLRW/J9xVMatadb.a1W', 1),
-(2, 'FakeRoyal', 'royal@softuni.bg', '$2y$10$1YGlXiCUOtpTjqBYKpczkeorlNwu5/LY4Agi0qEfg2iq.et/Jcl6.', 0);
+(2, 'FakeRoyal', 'royal@softuni.bg', '$2y$10$1YGlXiCUOtpTjqBYKpczkeorlNwu5/LY4Agi0qEfg2iq.et/Jcl6.', 0),
+(3, 'radoslav radev', 'radoslav0134@gmail.com', '$2y$10$l3keNIBSs7GBu.5Xd8Ffde/rVPBiiNSh1CLS9oz7MU6kXpOU4tmsu', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `Comments`
+-- Indexes for table `comments`
 --
-ALTER TABLE `Comments`
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `Posts`
+-- Indexes for table `posts`
 --
-ALTER TABLE `Posts`
+ALTER TABLE `posts`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `Tags`
+-- Indexes for table `tags`
 --
-ALTER TABLE `Tags`
+ALTER TABLE `tags`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -144,25 +152,25 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT for table `Comments`
+-- AUTO_INCREMENT for table `comments`
 --
-ALTER TABLE `Comments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `comments`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT for table `Posts`
+-- AUTO_INCREMENT for table `posts`
 --
-ALTER TABLE `Posts`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `posts`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `Tags`
+-- AUTO_INCREMENT for table `tags`
 --
-ALTER TABLE `Tags`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `tags`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `Users`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `Users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `users`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

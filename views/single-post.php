@@ -9,6 +9,7 @@ $userController = new UserController($connection);
 $allPosts = $postcontroller->getAllPosts();
 $post = $postcontroller->getPostById((int)$_GET['id']);
 
+
 if (!empty($_GET['logout'])) {
     $userController->logout();
 }
@@ -32,6 +33,7 @@ if (!empty($_POST['addComment'])) {
 }
 
 $allComments = $postcontroller->getCommentsByPostId($post);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,6 +84,14 @@ $allComments = $postcontroller->getCommentsByPostId($post);
     <?php foreach ($allComments as $comment): ?>
         <h5><?= $comment['Name']; ?> said:</h5>
         <?= $comment['Content']; ?>
+        <?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
+            <form method="post">
+                <input type="hidden" name="id" value="<?= $comment->getID(); ?>">
+                <input type="submit" class="btn btn-warning" name="edit" value="Edit">
+                <input type="submit" class="btn btn-danger" name="delete" value="Delete">
+            </form>
+        <?php endif ?>
     <?php endforeach ?>
+
 </div>
 </body>
