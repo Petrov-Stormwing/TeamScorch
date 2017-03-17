@@ -1,6 +1,11 @@
 <?php
-require_once '../db/connection.php';
-require_once '../controllers/PostContoller.php';
+//require_once '../db/connection.php';
+//require_once '../controllers/PostContoller.php';
+
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/TeamScorch/db/connection.php');
+require_once ($_SERVER['DOCUMENT_ROOT'] . '/TeamScorch/controllers/PostContoller.php');
+
+
 
 $postcontroller = new PostController($connection);
 
@@ -35,7 +40,7 @@ if (!empty($_POST['edit'])) {
 			<li><a href="#">Page 1</a></li>
 			<li><a href="#">Page 2</a></li>
 			<li><a href="requests/logout.php">Изход</a></li>
-			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
+			<li class="pull-right"><a  href="user-profile.php"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>
 </nav>

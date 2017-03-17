@@ -1,5 +1,7 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IPost.php';
+
+require_once(__DIR__. '/../Interfaces/IPost.php');
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IPost.php';
 
 Class Post implements IPost
 {
@@ -152,7 +154,7 @@ Class Post implements IPost
 
     public function getPostById($id)
     {
-        $post = $this->connection->MSelectOnly('Posts', '*', 'WHERE ID = ' . $id);
+        $post = $this->connection->MSelectOnly('posts', '*', 'WHERE ID = ' . $id);
         $this->setId($post['ID']);
         $this->setTitle($post['Title']);
         $this->setContent($post['Content']);

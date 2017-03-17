@@ -1,5 +1,7 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IComment.php';
+
+require_once(__DIR__. '/../Interfaces/IComment.php');
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IComment.php';
 
 Class Comment implements IComment
 {

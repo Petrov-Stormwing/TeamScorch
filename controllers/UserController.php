@@ -1,9 +1,9 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/models/User.php';
+//require_once 'models/User.php';
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IUserController.php';
+require_once(__DIR__. '/../models/User.php');
 
-Class UserController implements IUserController
+Class UserController
 {
 	protected $users = [];
 
@@ -62,10 +62,25 @@ Class UserController implements IUserController
 		header('Location: ../index.php');
     }
 
+	public function editUser($id, $name, $email)
+	{
+		$user = new User($this->connection);
+		$user->getUserById($id);
+		$editedUser = $user->editUser($id, $name, $email);
+
+		if (!empty($editedUser)) {
+			header('Location: '. '../views/user-profile.php');
+		} else {
+			throw new Exception("Post was not edited!");
+		}
+	}
+
     public function makeAdmin($userIds)
     {
-    	$this->connection->MUpdate('Users', 'AccessLevel = 0', 'WHERE ID NOT IN (' . $userIds . ')');
+        $this->connection->MUpdate('Users', 'AccessLevel = 0', 'WHERE ID NOT IN (' . $userIds . ')');
         $this->connection->MUpdate('Users', 'AccessLevel = 1', 'WHERE ID IN (' . $userIds . ')');
         return $this;
     }
+
+
 }

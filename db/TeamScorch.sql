@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `TeamScorch`
 --
-
+CREATE DATABASE IF NOT EXISTS `teamscorch` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `teamscorch`;
 -- --------------------------------------------------------
 
 --
@@ -39,11 +40,11 @@ CREATE TABLE `Comments` (
 --
 
 INSERT INTO `Comments` (`ID`, `Content`, `UserID`, `PostID`, `Deleted`) VALUES
-(1, 'Who is this person?', 1, 2, 0),
-(2, 'I hate FACEBOOK!!!!', 1, 1, 0),
-(3, 'This is the greatest programmer, ever!!!', 2, 2, 0),
-(4, 'If you hate it, then delete it! :D', 2, 1, 0),
-(5, 'ffffffffffffffffffffffffffffff', 1, 2, 1);
+  (1, 'Who is this person?', 1, 2, 0),
+  (2, 'I hate FACEBOOK!!!!', 1, 1, 0),
+  (3, 'This is the greatest programmer, ever!!!', 2, 2, 0),
+  (4, 'If you hate it, then delete it! :D', 2, 1, 0),
+  (5, 'ffffffffffffffffffffffffffffff', 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -65,9 +66,9 @@ CREATE TABLE `Posts` (
 --
 
 INSERT INTO `Posts` (`ID`, `Title`, `Content`, `UserID`, `DateCreated`, `Deleted`) VALUES
-(1, 'Facebook API for custom emotions/actions/doing/everything', 'SimpleText is the native text editor for the Apple classic Mac OS.[1] SimpleText allows editing including text formatting (underline, italic, bold, etc.), fonts, and sizes. It was developed to integrate the features included in the different versions of TeachText that were created by various software development groups within Apple.[2]', 1, '2017-03-14 11:41:36', 0),
-(2, 'Wallis Nunataks', 'Wallis Nunataks (66°52′S 55°39′ECoordinates: 66°52′S 55°39′E) is a four nunataks with steep rock faces on their south and east sides, standing 4 nautical miles (7 km) east-northeast of Mount Storegutt in Enderby Land. Mapped from ANARE (Australian National Antarctic Research Expeditions) surveys and air photos, 1954-66. Named by Antarctic Names Committee of Australia (ANCA) for G.R. Wallis, geologist with the ANARE (Nella Dan), 1965.', 1, '2017-03-14 11:42:11', 0),
-(3, 'Facebook API for custom emotions/actions/doing/everything', '332323223323232323232', 1, '2017-03-16 17:46:57', 1);
+  (1, 'Facebook API for custom emotions/actions/doing/everything', 'SimpleText is the native text editor for the Apple classic Mac OS.[1] SimpleText allows editing including text formatting (underline, italic, bold, etc.), fonts, and sizes. It was developed to integrate the features included in the different versions of TeachText that were created by various software development groups within Apple.[2]', 1, '2017-03-14 11:41:36', 0),
+  (2, 'Wallis Nunataks', 'Wallis Nunataks (66°52′S 55°39′ECoordinates: 66°52′S 55°39′E) is a four nunataks with steep rock faces on their south and east sides, standing 4 nautical miles (7 km) east-northeast of Mount Storegutt in Enderby Land. Mapped from ANARE (Australian National Antarctic Research Expeditions) surveys and air photos, 1954-66. Named by Antarctic Names Committee of Australia (ANCA) for G.R. Wallis, geologist with the ANARE (Nella Dan), 1965.', 1, '2017-03-14 11:42:11', 0),
+  (3, 'Facebook API for custom emotions/actions/doing/everything', '332323223323232323232', 1, '2017-03-16 17:46:57', 1);
 
 -- --------------------------------------------------------
 
@@ -86,20 +87,20 @@ CREATE TABLE `Tags` (
 --
 
 INSERT INTO `Tags` (`ID`, `Name`, `PostID`) VALUES
-(1, 'apple', 1),
-(2, 'facebook', 1),
-(3, 'text', 1),
-(4, 'wallis', 2),
-(5, 'nunataks', 2),
-(6, 'australia', 2),
-(7, 'tag', 3),
-(8, 'tag2', 3),
-(9, 'tag3', 3),
-(10, 'facebook', 3),
-(11, 'tag', 3),
-(12, 'tag2', 3),
-(13, 'tag3', 3),
-(14, 'facebook', 3);
+  (1, 'apple', 1),
+  (2, 'facebook', 1),
+  (3, 'text', 1),
+  (4, 'wallis', 2),
+  (5, 'nunataks', 2),
+  (6, 'australia', 2),
+  (7, 'tag', 3),
+  (8, 'tag2', 3),
+  (9, 'tag3', 3),
+  (10, 'facebook', 3),
+  (11, 'tag', 3),
+  (12, 'tag2', 3),
+  (13, 'tag3', 3),
+  (14, 'facebook', 3);
 
 -- --------------------------------------------------------
 
@@ -120,8 +121,8 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Name`, `Email`, `Password`, `AccessLevel`) VALUES
-(1, 'SoftUni USER', 'softuni@softuni.bg', '$2y$10$SYcfG3U0FzusUlZX4XnHUO/ces1qpemGl8WLRW/J9xVMatadb.a1W', 1),
-(2, 'FakeRoyal', 'royal@softuni.bg', '$2y$10$1YGlXiCUOtpTjqBYKpczkeorlNwu5/LY4Agi0qEfg2iq.et/Jcl6.', 0);
+  (1, 'SoftUni USER', 'softuni@softuni.bg', '$2y$10$SYcfG3U0FzusUlZX4XnHUO/ces1qpemGl8WLRW/J9xVMatadb.a1W', 1),
+  (2, 'FakeRoyal', 'royal@softuni.bg', '$2y$10$1YGlXiCUOtpTjqBYKpczkeorlNwu5/LY4Agi0qEfg2iq.et/Jcl6.', 0);
 
 --
 -- Indexes for dumped tables
@@ -131,25 +132,25 @@ INSERT INTO `Users` (`ID`, `Name`, `Email`, `Password`, `AccessLevel`) VALUES
 -- Indexes for table `Comments`
 --
 ALTER TABLE `Comments`
-  ADD PRIMARY KEY (`ID`);
+ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `Posts`
 --
 ALTER TABLE `Posts`
-  ADD PRIMARY KEY (`ID`);
+ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `Tags`
 --
 ALTER TABLE `Tags`
-  ADD PRIMARY KEY (`ID`);
+ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `Users`
 --
 ALTER TABLE `Users`
-  ADD PRIMARY KEY (`ID`);
+ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -159,22 +160,22 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `Comments`
 --
 ALTER TABLE `Comments`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `Posts`
 --
 ALTER TABLE `Posts`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Tags`
 --
 ALTER TABLE `Tags`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,5 +1,7 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/ITag.php';
+
+require_once(__DIR__. '/../Interfaces/ITag.php');
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/ITag.php';
 
 Class Tag implements ITag
 {

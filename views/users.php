@@ -47,7 +47,7 @@ $allUsers = $userController->getAllUsers();
 			<li><a href="welcome.php">Posts</a></li>
 			<li class="active"><a href="users.php">Users</a></li>
 			<li><a href="welcome.php?logout=true">Изход</a></li>
-			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
+			<li class="pull-right"><a  href="user-profile.php"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>
 </nav>

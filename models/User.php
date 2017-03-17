@@ -1,6 +1,6 @@
 <?php
-
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IUser.php';
+require_once(__DIR__. '/../Interfaces/IUser.php');
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IUser.php';
 
 Class User implements IUser
 {
@@ -150,6 +150,13 @@ Class User implements IUser
 		$this->connection->MInsert('Users', '(Name, Email, Password, AccessLevel) VALUES ("' . $name . '", "' . $email . '", "' . password_hash($password, PASSWORD_DEFAULT) . '", ' . (empty($findUser) ? '1' : '0') . ')');
     	return $this->connection->MSelectOnly('Users', '*', 'ORDER BY ID DESC');
     }
+
+    public function editUser($id, $name, $email)
+    {
+        $this->connection->MUpdate('Users', 'Name = "' . $name . '", Email = "' . $email . '"', 'WHERE ID = "' . $id . '"');
+        return $this;
+    }
+
 
     public function login($email, $password)
     {

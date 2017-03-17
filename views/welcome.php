@@ -53,7 +53,7 @@ $allPosts = $postcontroller->getAllPosts();
 				<li><a href="users.php">Users</a></li>
 			<?php endif ?>
 			<li><a href="welcome.php?logout=true">Изход</a></li>
-			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
+			<li class="pull-right"><a href="user-profile.php"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>
 </nav>

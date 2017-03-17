@@ -1,9 +1,14 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Post.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Tag.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Comment.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Post.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Tag.php';
+//require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Comment.php';
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IPostController.php';
+require_once(__DIR__. '/../models/Post.php');
+require_once(__DIR__. '/../models/Tag.php');
+require_once(__DIR__. '/../models/Comment.php');
+require_once(__DIR__. '/../Interfaces/IPostController.php');
+
+
 
 Class PostController implements IPostController
 {

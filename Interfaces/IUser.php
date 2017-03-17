@@ -21,4 +21,6 @@ Interface IUser
     public function addUser($name, $email, $password);
 
     public function login($email, $password);
+
+    public function editUser($id, $name, $email);
 }

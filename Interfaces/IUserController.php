@@ -17,4 +17,6 @@ interface IUserController
     public function logout();
 
     public function makeAdmin($userIds);
+
+    public function editUser($id, $name, $email);
 }

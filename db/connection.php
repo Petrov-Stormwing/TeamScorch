@@ -5,7 +5,14 @@ if (session_status() == PHP_SESSION_NONE) {
 require 'MysqlPDO.php';
 
 try {
-    $connection = new MysqlPDO('mysql:host=localhost; dbname=TeamScorch; charset=utf8;', 'TeamScorch', 'softuni');
+    $connection = new MysqlPDO('mysql:host=localhost; dbname=teamscorch; charset=utf8;', 'root', '');
 } catch(PDOException $e) {
     echo $e->getMessage();
 }
+
+
+
+
+
+
+//$connection = new MysqlPDO('mysql:host=localhost; dbname=teamscorch; charset=utf8;', 'TeamScorch', 'softuni');
