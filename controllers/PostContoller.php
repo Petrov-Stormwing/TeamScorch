@@ -3,7 +3,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Post.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Tag.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/Comment.php';
 
-Class PostController
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IPostController.php';
+
+Class PostController implements IPostController
 {
 	protected $posts = [];
 	protected $comments = [];
@@ -53,7 +55,7 @@ Class PostController
 
 	public function getAllPosts()
 	{
-		$data = $this->connection->MSelectList('Posts', '*', 'ORDER BY ID DESC');
+		$data = $this->connection->MSelectList('Posts', '*', 'WHERE Deleted != 1 ORDER BY ID DESC');
 		foreach ($data as $postData) {
 			$postIt = $this->getPostById($postData['ID']);
 			$this->addPost($postIt);
@@ -103,28 +105,13 @@ Class PostController
 		}
 	}
 
-    public function deleteComment(Comment $postComment)
-    {
-//        echo "<pre>";
-//        print_r($postComment->getId());
-//        echo "<pre>";
-//        exit;
-        $deleteComment = $postComment->deleteComment($postComment->getId());
-
-        if (!empty($deleteComment)) {
-            header('Location: '. '../views/single-post.php');
-        } else {
-            throw new Exception("Comment was not deleted!");
-        }
-    }
-
 	public function getCommentsByPostId(Post $post)
 	{
 		$data = $this->connection->MSelectList(
 			'Comments AS C',
 			'C.ID, C.Content, U.Name',
 			'JOIN Users AS U ON U.ID = C.UserID
-			WHERE C.PostID = "' . $post->getId() . '"
+			WHERE C.PostID = "' . $post->getId() . '" AND C.Deleted != 1
 			ORDER BY ID DESC'
 		);
 
@@ -133,19 +120,20 @@ Class PostController
 
     public function getCommentById($id)
     {
-//        echo "<pre>";
-//        print_r($id);
-//        echo "<pre>";
-//        exit;
         $commentFromDb = $this->connection->MSelectOnly('Comments', '*', 'WHERE ID = ' . $id);
-        $comment = new Comment( $commentFromDb['Content'], $commentFromDb['UserID'], $commentFromDb['PostID'], $this->connection);
+        $comment = new Comment($commentFromDb['Content'], $commentFromDb['UserID'], $commentFromDb['PostID'], $this->connection);
         $comment->setId($commentFromDb['ID']);
         return $comment;
     }
 
-//    public function getCommentById($id)
-//    {
-//        $comment = new Comment($this->connection);
-//        return $comment->getCommentById($id);
-//    }
+    public function deleteComment(Comment $postComment, $postID)
+    {
+        $deleteComment = $postComment->deleteComment($postComment->getId());
+
+        if (!empty($deleteComment)) {
+            header('Location: '. '../views/single-post.php?id=' . $postID);
+        } else {
+            throw new Exception("Comment was not deleted!");
+        }
+    }
 }

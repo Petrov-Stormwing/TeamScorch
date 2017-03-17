@@ -13,6 +13,19 @@ if (empty($_SESSION['user']) && $_SESSION['user']['AccessLevel'] != 1) {
 	header('Location: '. $_SERVER['SERVER_NAME']);
 }
 
+if (!empty($_POST['rights'])) {
+	if (count($_POST) < 2) {
+		throw new Exception("There should be at least 1 user with admin rights!");
+	}
+	$usersForAdmin = [];
+	foreach ($_POST as $userId) {
+		if (is_numeric($userId)) {
+			$usersForAdmin[] = $userId;
+		}
+	}
+	$userController->makeAdmin(implode($usersForAdmin));
+}
+
 $allUsers = $userController->getAllUsers();
 ?>
 
@@ -45,9 +58,11 @@ $allUsers = $userController->getAllUsers();
 		<?php foreach ($allUsers as $user): ?>
 			<form method="post">
 				<label for="<?= $user->getId(); ?>"><?= $user->getName() ?> is admin? </label>
-				<input type="checkbox" name="user-<? $user->getId(); ?>" <?= ($user->getAccessLevel() == 1) ? "checked" : "" ?>>
-			</form>
+				<input type="checkbox" name="user-<?= $user->getId(); ?>" id="<?= $user->getId(); ?>" value="<?= $user->getId(); ?>" <?= ($user->getAccessLevel() == 1) ? "checked" : "" ?>>
+				<br>
 		<?php endforeach ?>
+		<input type="submit" name="rights" class="btn btn-primary" value="Update rights">
+		</form>
 	</div>
 <?php endif ?>
 </div>

@@ -1,6 +1,7 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IComment.php';
 
-Class Comment
+Class Comment implements IComment
 {
 	protected $id;
 	protected $content;
@@ -114,7 +115,7 @@ Class Comment
 
     public function addCommentToDb()
     {
-    	$this->connection->MInsert('Comments', '(Content, UserID, PostID) VALUES ("' . $this->getContent() . '", "' . $this->getUserId() . '", "' . $this->getPostId() . '")');
+    	$this->connection->MInsert('Comments', '(Content, UserID, PostID, Deleted) VALUES ("' . $this->getContent() . '", "' . $this->getUserId() . '", "' . $this->getPostId() . '", 0)');
     	return $this;
     }
 
@@ -130,6 +131,6 @@ Class Comment
     public function deleteComment($id)
     {
         $this->connection->MUpdate('Comments', 'Deleted = 1', 'WHERE ID = ' . $id);
-        return true;
+        return $this;
     }
 }

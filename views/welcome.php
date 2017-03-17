@@ -84,7 +84,7 @@ $allPosts = $postcontroller->getAllPosts();
 				<form method="post">
 					<input type="hidden" name="id" value="<?= $post->getID(); ?>">
 					<input type="submit" class="btn btn-warning" name="edit" value="Edit">
-					<input type="submit" class="btn btn-danger" name="delete" value="Delete">
+					<input type="submit" onclick="confirm('Are you sure you want to delete this post?')" class="btn btn-danger" name="delete" value="Delete">
 				</form>
 			<?php endif ?>
 			<hr>

@@ -1,6 +1,8 @@
 <?php
 
-Class User
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IUser.php';
+
+Class User implements IUser
 {
 	protected $id;
 	protected $name;

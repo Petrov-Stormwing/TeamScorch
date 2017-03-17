@@ -1,6 +1,7 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IPost.php';
 
-Class Post
+Class Post implements IPost
 {
 	protected $id;
 	protected $title;
@@ -163,7 +164,7 @@ Class Post
     public function addPostToDb($title, $content, $authorId)
     {
         $date = date('Y-m-d H:i:s');
-    	$this->connection->MInsert('Posts', '(Title, Content, UserID, DateCreated) VALUES ("' . $title . '", "' . $content . '", "' . $authorId . '", "' . $date . '")');
+    	$this->connection->MInsert('Posts', '(Title, Content, UserID, DateCreated, Deleted) VALUES ("' . $title . '", "' . $content . '", "' . $authorId . '", "' . $date . '", 0)');
         $postId = $this->connection->MSelectOnly('Posts', 'ID', 'ORDER BY ID DESC');
         return $postId['ID'];
     }
@@ -176,8 +177,8 @@ Class Post
 
     public function deletePost($postId)
     {
-        $this->connection->MDelete('Posts', 'WHERE ID = "' . $postId . '"');
-        return true;
+        $this->connection->MUpdate('Posts', 'Deleted = 1', 'WHERE ID = "' . $postId . '"');
+        return $this;
     }
 
     public function getTagsByPostId($postId)

@@ -34,7 +34,7 @@ if (!empty($_POST['addComment'])) {
 
 if (!empty($_POST['deleteComment'])) {
     $commentToDelete = $postcontroller->getCommentById($_POST['id']);
-    $postcontroller->deleteComment($commentToDelete);
+    $postcontroller->deleteComment($commentToDelete, $_GET['id']);
 }
 
 
@@ -76,7 +76,7 @@ $allComments = $postcontroller->getCommentsByPostId($post);
         <form method="post">
             <input type="hidden" name="id" value="<?= $post->getID(); ?>">
             <input type="submit" class="btn btn-warning" name="edit" value="Edit">
-            <input type="submit" class="btn btn-danger" name="delete" value="Delete">
+            <input type="submit" onclick="confirm('Are you sure you want to delete this post?')" class="btn btn-danger" name="delete" value="Delete">
         </form>
     <?php endif ?>
     <h5>Comments:</h5>
@@ -93,8 +93,7 @@ $allComments = $postcontroller->getCommentsByPostId($post);
         <?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
             <form method="post">
                 <input type="hidden" name="id" value="<?= $comment['ID']; ?>">
-<!--                <input type="submit" class="btn btn-warning" name="edit" value="Edit">-->
-                <input type="submit" class="btn btn-danger" name="deleteComment" value="Delete">
+                <input type="submit" class="btn btn-danger" name="deleteComment" onclick="confirm('Are you sure you want to delete this comment?')" value="Delete">
             </form>
         <?php endif ?>
     <?php endforeach ?>

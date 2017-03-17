@@ -1,7 +1,9 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/models/User.php';
 
-Class UserController
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/IUserController.php';
+
+Class UserController implements IUserController
 {
 	protected $users = [];
 
@@ -58,5 +60,12 @@ Class UserController
     	session_destroy();
 
 		header('Location: ../index.php');
+    }
+
+    public function makeAdmin($userIds)
+    {
+    	$this->connection->MUpdate('Users', 'AccessLevel = 0', 'WHERE ID NOT IN (' . $userIds . ')');
+        $this->connection->MUpdate('Users', 'AccessLevel = 1', 'WHERE ID IN (' . $userIds . ')');
+        return $this;
     }
 }

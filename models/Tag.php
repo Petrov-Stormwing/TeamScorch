@@ -1,6 +1,7 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Interfaces/ITag.php';
 
-Class Tag
+Class Tag implements ITag
 {
 	protected $id;
 	protected $name;
