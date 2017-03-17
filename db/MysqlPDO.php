@@ -25,6 +25,17 @@ class MysqlPDO extends PDO implements IMysqlPDO
         $sth->execute();
         return $sth->fetchAll(); 
     }
+
+    public function MSelectListByParam( $table, $select, $where, $params = [])
+    {
+        $query = 'SELECT '.$select.' FROM '.$table.' WHERE id= '.$where;
+//        var_dump($query);
+//        exit;
+
+        $sth = $this->prepare($query);
+        $sth->execute($params);
+        return $sth->fetchAll();
+    }
     
     private function Loops($result, $arr = null)
     { 

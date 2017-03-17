@@ -35,6 +35,7 @@ if (!empty($_POST['edit'])) {
 			<li><a href="#">Page 1</a></li>
 			<li><a href="#">Page 2</a></li>
 			<li><a href="requests/logout.php">Изход</a></li>
+            <?php  //var_dump($_SESSION)  ?>
 			<li class="pull-right"><a  href="#"><?= $_SESSION['user']['Name'] . " " . (($_SESSION['user']['AccessLevel'] == 1) ? '(админ)' : '') ?></a></li>
 		</ul>
 	</div>

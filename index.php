@@ -2,6 +2,7 @@
 require 'db/connection.php';
 require 'controllers/UserController.php';
 
+
 $userController = new UserController($connection);
 
 if (!empty($_POST['register'])) {

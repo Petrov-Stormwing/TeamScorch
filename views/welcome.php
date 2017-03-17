@@ -77,8 +77,15 @@ $allPosts = $postcontroller->getAllPosts();
 		<?php foreach ($allPosts as $post): ?>
 			<h4><a href="single-post.php?id=<?= $post->getId() ?>"><?= $post->getTitle() . " - " . $post->getDate(); ?></a></h4>
 			<p><?= $post->getContent(); ?></p>
-			Tags: <span class="bg-primary">
-				<?php echo implode(", ", $post->getTagsByPostId($post->getId())); ?>
+			Tags: <span class="">
+                <?php
+
+                foreach ($post->getTagsByPostId($post->getId()) as $tag){
+                    $href = "href='/views/tag.php?id=" . $tag['id'] ."'";
+                    echo "<span style=\"cursor:pointer\"><a $href>". $tag['name'] ."</a> </span>";
+                }
+                ?>
+				<?php //echo implode(", ", $post->getTagsByPostId($post->getId())); ?>
 			</span>
 			<?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
 				<form method="post">
