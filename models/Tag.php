@@ -92,4 +92,7 @@ Class Tag implements ITag
     	$this->connection->MInsert('Tags', '(Name, PostID) VALUES ("' . $this->getName() . '", "' . $this->getPostId() . '")');
     	return $this;
     }
+
+
+
 }

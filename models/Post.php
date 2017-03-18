@@ -185,9 +185,11 @@ Class Post implements IPost
     {
         $post = $this->getPostById($postId);
 
-        $allTags = $this->connection->MSelectList('Tags', '*', 'WHERE PostID = ' . $post->getId());
+        $allTags = $this->connection->MSelectList('Tags', 'name, id', 'WHERE PostID = ' . $post->getId());
         foreach ($allTags as $tag) {
-            $this->addTag($tag['Name']);
+            $formatedTag['name'] = $tag['name'];
+            $formatedTag['id'] = $tag['id'];
+            $this->addTag($formatedTag);
         }
 
         return $this->getTags();

@@ -69,8 +69,16 @@ $allComments = $postcontroller->getCommentsByPostId($post);
     <h4><?= $post->getTitle() . " - " . $post->getDate(); ?></h4>
     <p><?= $post->getContent(); ?></p>
     Tags:
-    <span class="bg-primary">
-        <?php echo implode(", ", $post->getTagsByPostId($post->getId())); ?>
+    <span class="">
+        <?php
+         //   var_dump($post->getTagsByPostId($post->getId()));
+
+        foreach ($post->getTagsByPostId($post->getId()) as $tag){
+            $href = "href='/views/tag.php?id=" . $tag['id'] ."'";
+            echo "<span style=\"cursor:pointer\"><a $href>". $tag['name'] ."</a> </span>";
+        }
+            //echo implode(", ", $post->getTagsByPostId($post->getId())['name']);
+        ?>
     </span>
     <?php if ($_SESSION['user']['AccessLevel'] == 1): ?>
         <form method="post">
