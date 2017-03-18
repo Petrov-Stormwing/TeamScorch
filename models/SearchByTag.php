@@ -11,7 +11,7 @@ namespace models;
 
 use Interfaces\ISearchByTag;
 
-class SearchByTag implements ISearchByTag
+class SearchByTag
 {
     protected $id;
     protected $connection;
