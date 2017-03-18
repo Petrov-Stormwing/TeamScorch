@@ -28,8 +28,3 @@ class SearchByTag
         return $result;
     }
 }
-
-
-
-
-
